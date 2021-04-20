@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
-const textStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98)
-);
+// Constant from this file starting with gC_
+import '../constants/global_constants.dart';
 
 class GenderCard extends StatelessWidget {
   const GenderCard({
@@ -26,7 +23,7 @@ class GenderCard extends StatelessWidget {
         ),
         Text(
           genderType,
-          style: textStyle,
+          style: gC_textStyle,
         )
       ],
     );
