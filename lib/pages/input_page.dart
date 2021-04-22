@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'widgets/reuseble_block.dart';
-import 'widgets/gender_card.dart';
-// Constant from this file starting with gC_
-import 'constants/global_constants.dart';
+// Project imports
+import 'package:bmi_calculator/widgets/bottom_button.dart';
+import 'package:bmi_calculator/widgets/reuseble_block.dart';
+import 'package:bmi_calculator/widgets/round_icon_btn.dart';
+import 'package:bmi_calculator/widgets/gender_card.dart';
+import 'package:bmi_calculator/constants/global_constants.dart';
+import 'package:bmi_calculator/pages/result_page.dart';
 
 enum GenderType {
   male,
@@ -31,96 +34,96 @@ class _InputPageState extends State<InputPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: ReusebleBlock(
-                    onPress: () {
-                      setState(() {
-                        selectedGender = GenderType.male;
-                      });
-                    },
-                    childWidget: GenderCard(
-                      genderType: "MALE",
-                      genderIcon: Icon(
-                        FontAwesomeIcons.mars,
-                        size: 80.0,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ReusebleBlock(
+                      onPress: () {
+                        setState(() {
+                          selectedGender = GenderType.male;
+                        });
+                      },
+                      childWidget: GenderCard(
+                        genderType: "MALE",
+                        genderIcon: Icon(
+                          FontAwesomeIcons.mars,
+                          size: 80.0,
+                        ),
                       ),
+                      blockColor: selectedGender == GenderType.male
+                          ? gC_activeCardColor
+                          : gC_inactiveCardColor,
                     ),
-                    blockColor: selectedGender == GenderType.male
-                      ? gC_activeCardColor
-                      : gC_inactiveCardColor,
                   ),
-                ),
-                Expanded(
-                  child: ReusebleBlock(
-                    onPress: () {
-                      setState(() {
-                        selectedGender = GenderType.female;
-                      });
-                    },
-                    childWidget: GenderCard(
-                      genderType: "FEMALE",
-                      genderIcon: Icon(
-                        FontAwesomeIcons.venus,
-                        size: 80.0,
+                  Expanded(
+                    child: ReusebleBlock(
+                      onPress: () {
+                        setState(() {
+                          selectedGender = GenderType.female;
+                        });
+                      },
+                      childWidget: GenderCard(
+                        genderType: "FEMALE",
+                        genderIcon: Icon(
+                          FontAwesomeIcons.venus,
+                          size: 80.0,
+                        ),
                       ),
+                      blockColor: selectedGender == GenderType.female
+                          ? gC_activeCardColor
+                          : gC_inactiveCardColor,
                     ),
-                    blockColor: selectedGender == GenderType.female
-                      ? gC_activeCardColor
-                      : gC_inactiveCardColor,
                   ),
-                ),
-              ],
-            )
+                ],
+              )
           ),
           Expanded(
             child: ReusebleBlock(
-              childWidget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "HEIGHT",
-                    style: gC_textStyle
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        height.toString(),
-                        style: gC_numberTextStyle,
-                      ),
-                      Text(
-                        "cm",
-                        style: gC_textStyle,
-                      ),
-                    ],
-                  ),
-                  SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: Colors.white,
-                      inactiveTrackColor: Color(0xFF8D8E98),
-                      thumbColor: Color(0xFFEB1555),
-                      overlayColor: Color(0x29EB1555),
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
+                childWidget: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                        "HEIGHT",
+                        style: gC_textStyle
                     ),
-                    child: Slider(
-                      value: height,
-                      min: 120.0,
-                      max: 220.0,
-                      onChanged: (double sliderValue) {
-                        setState(() {
-                          height = double.parse(sliderValue.toStringAsFixed(2));
-                        });
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          height.toString(),
+                          style: gC_numberTextStyle,
+                        ),
+                        Text(
+                          "cm",
+                          style: gC_textStyle,
+                        ),
+                      ],
                     ),
-                  )
-                ],
-              ),
-              blockColor: Color(0xFF1D1E33)
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor: Color(0xFF8D8E98),
+                        thumbColor: Color(0xFFEB1555),
+                        overlayColor: Color(0x29EB1555),
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
+                      ),
+                      child: Slider(
+                        value: height,
+                        min: 120.0,
+                        max: 220.0,
+                        onChanged: (double sliderValue) {
+                          setState(() {
+                            height = double.parse(sliderValue.toStringAsFixed(2));
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                blockColor: Color(0xFF1D1E33)
             ),
           ),
           Expanded(
@@ -213,32 +216,17 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+          BottomButton(
+            title: "Calculate",
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResultPage())
+              );
+            },
+          ),
         ],
       ),
     );
   }
 }
-
-class RoundIconBtn extends StatelessWidget {
-  RoundIconBtn({@required this.icon,@required this.onClick});
-
-  final IconData icon;
-  final Function onClick;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: onClick,
-      elevation: 6.0,
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0
-      ),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
-    );
-  }
-}
-
-
