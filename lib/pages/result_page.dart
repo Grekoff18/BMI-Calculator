@@ -1,7 +1,6 @@
 import 'package:bmi_calculator/widgets/reuseble_block.dart';
 import 'package:flutter/material.dart';
 import 'package:bmi_calculator/constants/global_constants.dart';
-import 'package:bmi_calculator/widgets/reuseble_block.dart';
 import 'package:bmi_calculator/widgets/bottom_button.dart';
 
 class ResultPage extends StatelessWidget {
